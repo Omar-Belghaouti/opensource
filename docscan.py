@@ -13,8 +13,7 @@ def looper2(image,pts,scale):
           if mover | firstime :
               firstime = False
               cimage = image.copy()
-
-    #drawing lines between points
+                
               for i,xx in enumerate(holder.values()):
                     if i == 0:
                         prev = xx
@@ -25,16 +24,12 @@ def looper2(image,pts,scale):
                             cv2.line(cimage,tuple(first),tuple(xx),(255,100,100),2)
                         prev = xx
 
-    #just for the sake of the design i'm drawing the circles in a seperate loop to avoid connecting lines on top of the image
-
               for i,xx in enumerate(holder.values()):
                     cv2.circle(cimage,tuple(xx), 15, (200,50,90), -1)
                     cv2.circle(cimage,tuple(xx), 16, (255,0,255), 2)
 
                     cv2.putText(cimage,str(i),tuple(xx), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (20,255,155), 2, cv2.LINE_AA)
 
-         # cv2.putText(cimage,'Press q to extract and drag the /n balls to correct',(15,15), cv2.FONT_HERSHEY_SIMPLEX,
-          #            0.5, (20,255,155), 1, cv2.LINE_AA)
           cv2.putText(cimage,'Press q to Extract',(1 ,15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (20,255,155), 1, cv2.LINE_AA)
           cv2.putText(cimage,'Drag the circles to correct',(1 ,35), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (20,255,155), 1, cv2.LINE_AA)
 
@@ -62,21 +57,18 @@ def getshort(targetp,holder):
         short[key] = targetp
 
     changedstr,changedval = list(short.items())[0]
-
     return changedstr,changedval
 
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
-file = askopenfilename() # show an "Open" dialog box and return the path to the selected file
-#file = easygui.fileopenbox()
+Tk().withdraw() 
+file = askopenfilename()
 img = cv2.imread(file)
 imgorg = img.copy()
 htresh = 500
 if img.shape[0] > htresh:
     scale = htresh / img.shape[0]
     img = cv2.resize(img, (0,0), fx=scale, fy=scale)
-#img = cv2.resize(img, (0,0), fx=scale, fy=scale)
 else:
     scale = 1
 print(scale, img.shape)
@@ -85,13 +77,9 @@ img2 = img.copy()
 rows, cols, chan=imgorg.shape
 
 imgray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-
 edges1 = cv2.Canny(imgray,219,390)
-
 blurred = cv2.GaussianBlur(edges1,(5,5),0)
-
 _,contours, hierarchy = cv2.findContours(blurred,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-
 c = max(contours, key = cv2.contourArea)
 
 cv2.drawContours(img, [c], 0, (0,255,0), 3)#draw the 3rd contour
@@ -118,7 +106,6 @@ holder = {'0th':None,'1st':None,'2nd':None ,'3rd':None}
 cv2.namedWindow('Detection')
 cv2.setMouseCallback('Detection',draw_circle)
 
-#if you cant find the doc then approximate the doc is there in middle
 if len(approx) != 4:
         pts1= np.float32([[cols-cols/4,rows/4],[cols-cols/1.3,rows/4],[cols-cols/1.3,rows/1.3],[cols-cols/4,rows/1.3]])
 
