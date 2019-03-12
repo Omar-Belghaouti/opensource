@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-# multiple cascades: https://github.com/Itseez/opencv/tree/master/data/haarcascades
 
 face_cascade = cv2.CascadeClassifier('carshaar.xml')
 cap = cv2.VideoCapture('carsvid.wmv')
