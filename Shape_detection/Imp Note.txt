@@ -1,0 +1,3 @@
+Note: There is more code in here than neccesary because I initially extracted masks by thresholding for pictures and then later
+shifted to edges for Gui and paper. You can simply go edges for all three, also ive pasted the code from jupyter notebook so you
+can also shift the code around to make it more clean.
